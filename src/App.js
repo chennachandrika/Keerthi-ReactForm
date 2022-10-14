@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Form from "./components/Form/Form"
+import PersonalDetails from "./components/PersonalDetails/PersonalDetails";
 
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Form/>} />
-        <Route exact path="/home" element={<p>Home</p>} />
+        <Route exact path="/personal-details" element={<PersonalDetails/>} />
       </Routes>
     </BrowserRouter>
   );
