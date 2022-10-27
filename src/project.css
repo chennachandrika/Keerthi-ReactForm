@@ -101,3 +101,34 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+.filteredJobs-container{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    padding:10px 20px;
+}
+
+@media screen and (min-width:768px) {
+    .filteredJobs-container{
+        flex-direction: row;
+        width: 80%;
+        justify-content: center;
+    }
+    .filteredJobs-container , .job-detailed-card{
+        width:100%;
+    }
+}
+
+.filters{
+    display: flex;
+    flex-direction: row;
+    min-width: 250px;
+    margin-bottom: 20px;
+    justify-content: space-around;
+}
+@media screen and (min-width:768px) {
+    .filters{
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+}
