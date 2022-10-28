@@ -38,11 +38,65 @@ const jobsData = [
     isHotJob: true,
     jobPosted: "5 Days Ago",
   },
+  {
+    role: "Angular Developer",
+    company: "Maximl Labs Private Limited",
+    experience: "1-3 Yrs",
+    salary: "3,00,000 - 5,00,000 PA",
+    location: "Delhi",
+    responsibilities:
+      "Deep knowledge on Angular 2+ practices and commonly used modules based on extensive work",
+    requiredSkills: [
+      "Angular",
+      "Angular 2+",
+      "CSS",
+      "Angular/software developer",
+      "Angular/Developer",
+    ],
+    isHotJob: true,
+    jobPosted: "2 Days Ago",
+  },
+  {
+    role: "React Developer",
+    company: "Codemonk Elvago Private Limited",
+    experience: "2-3 Yrs",
+    salary: "5,00,000 - 8,00,000 PA",
+    location: "Mumbai",
+    responsibilities:
+      "Deep knowledge on React practices and commonly used modules based on extensive work",
+    requiredSkills: [
+      "React",
+      "React Native",
+      "CSS",
+      "React/software developer",
+      "React/Developer",
+    ],
+    isHotJob: true,
+    jobPosted: "5 Days Ago",
+  },
+  {
+    role: "Angular Developer",
+    company: "Maximl Labs Private Limited",
+    experience: "1-3 Yrs",
+    salary: "3,00,000 - 5,00,000 PA",
+    location: "Hyderabad",
+    responsibilities:
+      "Deep knowledge on Angular 2+ practices and commonly used modules based on extensive work",
+    requiredSkills: [
+      "Angular",
+      "Angular 2+",
+      "CSS",
+      "Angular/software developer",
+      "Angular/Developer",
+    ],
+    isHotJob: true,
+    jobPosted: "2 Days Ago",
+  },
 ];
 
 const location = [
   {
-    name: "Banglore",
+    name: "Bangalore",
     checked: false,
   },
   {
@@ -81,7 +135,7 @@ const salary = [
   },
 ];
 
-const Checkbox = ({ obj ,onChange}) => {
+const Checkbox = ({ obj, onChange }) => {
   return (
     <>
       <input
@@ -98,19 +152,28 @@ const Checkbox = ({ obj ,onChange}) => {
 
 const FilterJobs = () => {
   const [filteredData, setFilteredData] = useState(jobsData);
-  const [locationData,setLocationData]=useState(location);
-  const [salaryData,setSalaryData]=useState(salary);
-  
-  const renderJobs=()=>{
-    const loc=locationData.filter(item=>item.checked===true)
-    const sal=salaryData.filter(item=>item.checked===true)
-    console.log(filteredData.filter(item=>loc.map(i=>i===item.location)))
-  }
-  useEffect(()=>{
-    const loc=locationData.filter(item=>item.checked===true)
-    const sal=salaryData.filter(item=>item.checked===true)
-    console.log(loc,sal)
-  },[salaryData,locationData])
+  const [locationData, setLocationData] = useState(location);
+  const [salaryData, setSalaryData] = useState(salary);
+
+  const renderJobs = () => {
+    const loc = locationData.filter((item) => item.checked === true);
+    const sal = salaryData.filter((item) => item.checked === true);
+    const res = [];
+    if (loc.length !== 0) {
+      for (let l of loc) {
+        const main = jobsData.filter((job) => job.location === l.name);
+        res.push(...main);
+      }
+      setFilteredData(res);
+    } else {
+      setFilteredData(jobsData);
+    }
+  };
+
+  useEffect(() => {
+    renderJobs();
+  }, [locationData, salaryData]);
+
   return (
     <div className="jobs-container">
       <div className="filteredJobs-container">
@@ -122,22 +185,25 @@ const FilterJobs = () => {
                 <Checkbox
                   obj={obj}
                   onChange={(item) => {
-                    setLocationData(locationData.map((d) => (d.name === item.name ? item : d)));
-                    renderJobs()
-                }}
+                    setLocationData(
+                      locationData.map((d) => (d.name === item.name ? item : d))
+                    );
+                  }}
                 />
               </li>
             ))}
           </div>
-          <div >
+          <div>
             <h1>Salary</h1>
             {salaryData.map((obj, index) => (
               <li style={{ listStyleType: "none" }}>
                 <Checkbox
                   obj={obj}
                   onChange={(item) => {
-                    setSalaryData(salaryData.map((d) => (d.name === item.name ? item : d)));
-                }}
+                    setSalaryData(
+                      salaryData.map((d) => (d.name === item.name ? item : d))
+                    );
+                  }}
                 />
               </li>
             ))}
