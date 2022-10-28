@@ -3,10 +3,40 @@ import JobDetailedCard from "../JobDetailedCard/JobDetailedCard";
 
 const jobsData = [
   {
+    role: "JavaScript Developer",
+    company: "Maximl Labs Private Limited",
+    experience: "0 yrs",
+    salary: "0,00,000 - 3,00,000 PA",
+    minSalary: "0,00,000",
+    maxSalary: "3,00,000",
+    location: "Bangalore",
+    responsibilities:
+      "Deep knowledge on Javascript practices based on extensive work",
+    requiredSkills: ["Javascript", "CSS", "HTML"],
+    isHotJob: true,
+    jobPosted: "2 Days Ago",
+  },
+  {
+    role: "Python Developer",
+    company: "Maximl Labs Private Limited",
+    experience: "0 yrs",
+    salary: "0,00,000 - 3,00,000 PA",
+    minSalary: "0,00,000",
+    maxSalary: "3,00,000",
+    location: "Hyderabad",
+    responsibilities:
+      "Deep knowledge on Pyhton  practices based on extensive work",
+    requiredSkills: ["Python", "CSS", "HTML"],
+    isHotJob: true,
+    jobPosted: "2 Days Ago",
+  },
+  {
     role: "Angular Developer",
     company: "Maximl Labs Private Limited",
     experience: "1-3 Yrs",
     salary: "3,00,000 - 5,00,000 PA",
+    minSalary: "3,00,000",
+    maxSalary: "5,00,000",
     location: "Chennai",
     responsibilities:
       "Deep knowledge on Angular 2+ practices and commonly used modules based on extensive work",
@@ -21,10 +51,12 @@ const jobsData = [
     jobPosted: "2 Days Ago",
   },
   {
-    role: "React Developer",
+    role: "Junior React Developer",
     company: "Codemonk Elvago Private Limited",
     experience: "2-3 Yrs",
-    salary: "5,00,000 - 8,00,000 PA",
+    salary: "3,00,000 - 5,00,000 PA",
+    minSalary: "3,00,000",
+    maxSalary: "5,00,000",
     location: "Bangalore",
     responsibilities:
       "Deep knowledge on React practices and commonly used modules based on extensive work",
@@ -42,7 +74,9 @@ const jobsData = [
     role: "Angular Developer",
     company: "Maximl Labs Private Limited",
     experience: "1-3 Yrs",
-    salary: "3,00,000 - 5,00,000 PA",
+    salary: "6,00,000 - 9,00,000 PA",
+    minSalary: "6,00,000",
+    maxSalary: "9,00,000",
     location: "Delhi",
     responsibilities:
       "Deep knowledge on Angular 2+ practices and commonly used modules based on extensive work",
@@ -60,7 +94,9 @@ const jobsData = [
     role: "React Developer",
     company: "Codemonk Elvago Private Limited",
     experience: "2-3 Yrs",
-    salary: "5,00,000 - 8,00,000 PA",
+    salary: "6,00,000 - 9,00,000 PA",
+    minSalary: "6,00,000",
+    maxSalary: "9,00,000",
     location: "Mumbai",
     responsibilities:
       "Deep knowledge on React practices and commonly used modules based on extensive work",
@@ -73,24 +109,6 @@ const jobsData = [
     ],
     isHotJob: true,
     jobPosted: "5 Days Ago",
-  },
-  {
-    role: "Angular Developer",
-    company: "Maximl Labs Private Limited",
-    experience: "1-3 Yrs",
-    salary: "3,00,000 - 5,00,000 PA",
-    location: "Hyderabad",
-    responsibilities:
-      "Deep knowledge on Angular 2+ practices and commonly used modules based on extensive work",
-    requiredSkills: [
-      "Angular",
-      "Angular 2+",
-      "CSS",
-      "Angular/software developer",
-      "Angular/Developer",
-    ],
-    isHotJob: true,
-    jobPosted: "2 Days Ago",
   },
 ];
 
@@ -119,18 +137,20 @@ const location = [
 const salary = [
   {
     name: "0-3 Lakhs",
+    minSalary: "0,00,000",
+    maxSalary: "3,00,000",
     checked: false,
   },
   {
-    name: "3-8 Lakhs",
+    name: "3-6 Lakhs",
+    minSalary: "3,00,000",
+    maxSalary: "6,00,000",
     checked: false,
   },
   {
-    name: "8-10 Lakhs",
-    checked: false,
-  },
-  {
-    name: "10-15 Lakhs",
+    name: "6-9 Lakhs",
+    minSalary: "6,00,000",
+    maxSalary: "9,00,000",
     checked: false,
   },
 ];
@@ -158,13 +178,25 @@ const FilterJobs = () => {
   const renderJobs = () => {
     const loc = locationData.filter((item) => item.checked === true);
     const sal = salaryData.filter((item) => item.checked === true);
-    const res = [];
-    if (loc.length !== 0) {
+
+    let res = [];
+    if (loc.length !== 0 || sal.length !== 0) {
       for (let l of loc) {
         const main = jobsData.filter((job) => job.location === l.name);
         res.push(...main);
       }
-      setFilteredData(res);
+      if (loc.length === 0) {
+        res = jobsData;
+      }
+      const salData = [];
+      console.log(sal);
+      for (let s of sal) {
+        const main = res.filter(
+          (job) => job.minSalary >= s.minSalary && s.maxSalary >= job.maxSalary
+        );
+        salData.push(...main);
+      }
+      setFilteredData(salData ? salData : res);
     } else {
       setFilteredData(jobsData);
     }
